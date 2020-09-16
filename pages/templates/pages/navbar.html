@@ -1,0 +1,25 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'pages/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'pages/open-iconic-bootstrap.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'pages/custom.css' %}">
+
+<!--The navigation bar -->
+<nav class="navbar navbar-expand-md navbar-light" style="background-color: #126122;">
+    <a class="navbar-brand" style="color: #FFFFFF;" href="#">
+        <img src="{% static 'pages/rhizoserver.png' %}" width="30" height="30" class="d-inline-block align-top" alt="RhizoServer">
+        Rhizoserver
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar5">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse" id="navbar5">
+        <form action="{% url 'search_results' %}" method="get" class="mx-2 my-auto d-inline w-75">
+            <div class="input-group">
+                <input name="q" type="text" class="form-control">
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">
+                  Search
+                </button>
+            </div>
+        </form>
+    </div>
+</nav> <!-- navbar end -->

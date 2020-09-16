@@ -1,0 +1,11 @@
+{% include "pages/navbar.html" %}
+
+<h1>Search Results</h1>
+
+<ul>
+  {%for seq in object_list %}
+    <li> {{ seq.accession_number }} </li>
+  {% endfor %}
+</ul>
+
+{% include "pages/footer.html" %}

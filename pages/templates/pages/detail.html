@@ -1,0 +1,46 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'pages/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'pages/open-iconic-bootstrap.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'pages/custom.css' %}">
+
+{% include "pages/navbar.html" %}
+<br/>
+<br/>
+<body>
+    <div class="container-fluid">
+        <div class="row"> 
+            <div class="col-2"> <!-- left column start -->
+                <nav class="nav flex-column">
+                    <a class="nav-link" href="#">All resources</a>
+                    <a class="nav-link" href="#">Rizobiales database</a>
+                    <a class="nav-link" href="#">Glomeromycota database</a>
+                    <a class="nav-link" href="#">Taxonomy</a>
+                </nav>
+            </div> <!-- left column end -->
+	    <div class="col-10"> <!-- center column start -->
+	    	<div class="seq-header">
+		    <h1>RhizoServer - {{ sequence.accession_number }}</h1>
+		    <hr>
+		</div>
+		<div class="seq-desc">
+		    <h3> Description </h3>
+		    <hr>
+		    <p><b>Description</b></br>{{ sequence.sequence_description }}</p>
+		    <p><b>Accession: </b>{{ sequence.accession_number }}</p>
+		    <p><b>Name: </b>{{ sequence.sequence_name }}</p>
+		    <p><b>Keywords: </b>{{ sequence.sequence_type }}</p>	
+		    <p><b>Organism: </b>{{ sequence.organism }}</p>
+		</div>
+		<div class="seq-seq">
+		    <h3> Sequence </h3>
+		    <hr>
+		    <p><b>Sequence</b></p>
+		    <br/>
+		    {{ sequence.pretty_seq }}
+		</div>
+	    </div>
+	</div>
+     </div>
+</body>	
+{% include "pages/footer.html" %}

@@ -1,0 +1,23 @@
+.btn-primary{
+    background-color: #2d7d34;
+    border-color:#2d7d34;
+}
+
+.btn-primary:hover{
+    background-color: #126122;
+    border-color: #126122;
+}
+/* Left side nav css */
+a.nav-link{
+    color: #56a340;
+}
+
+/* Footer custom css */
+.page-footer{
+    background-color: #548864;
+    color: #FFFFFF;
+}
+
+.page-footer a{
+    color: #FFFFFF;
+}
