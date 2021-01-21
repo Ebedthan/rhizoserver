@@ -1,5 +1,5 @@
 # Secret key and other things for production
-rhizoserver/secrets_settings.txt
+.env
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

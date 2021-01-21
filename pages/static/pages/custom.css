@@ -1,20 +1,20 @@
 .btn-primary{
-    background-color: #2d7d34;
-    border-color:#2d7d34;
+    background-color: #5dbdce;
+    border-color:#5dbdce;
 }
 
 .btn-primary:hover{
-    background-color: #126122;
-    border-color: #126122;
+    background-color: #48a0af;
+    border-color: #48a0af;
 }
 /* Left side nav css */
 a.nav-link{
-    color: #56a340;
+    color: #48a0af;
 }
 
 /* Footer custom css */
 .page-footer{
-    background-color: #548864;
+    background-color: #5dbdce;
     color: #FFFFFF;
 }
 
