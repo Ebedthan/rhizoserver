@@ -18,10 +18,8 @@ from django.urls import path, include, re_path
 
 urlpatterns = [
     path('', include('pages.urls')),
-
     # Admin page
     path('rhadser/', admin.site.urls),
-    
     # Add honeypot for monitoring hacker attacks 
     re_path(r'^admin/', include('admin_honeypot.urls', namespace = 'admin_honeypot')),
 ]
