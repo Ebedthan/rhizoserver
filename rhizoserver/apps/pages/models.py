@@ -5,9 +5,8 @@ from django.contrib.postgres.indexes import GinIndex
 class Sequence(models.Model):
     seq_acc       = models.CharField(max_length=50)
     seq_name      = models.CharField(max_length=300)
-    seq_desc      = models.CharField(max_length=500)
-    seq_organism  = models.CharField(max_length=500)
-    seq_type      = models.CharField(max_length=50,   default='RHIZO')
+    seq_desc      = models.CharField(max_length=500) 
+    seq_tax       = models.ManyToManyField("Taxonomy", blank=True)
     seq           = models.CharField(max_length=3000, default='ATCG')
     search_vector = SearchVectorField(null=True)
 
@@ -23,3 +22,12 @@ class Sequence(models.Model):
         return '\n'.join(map(str, seq_list))
      
     pretty_seq = property(_pretty_seq)
+
+
+class Taxonomy(models.Model):
+    fk_seq         = models.ForeignKey(Sequence, on_delete=models.CASCADE)
+    tax_organism   = models.CharField(max_length=2000)
+    tax_ispathogen = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.tax_organism
