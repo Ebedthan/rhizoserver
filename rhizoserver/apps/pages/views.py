@@ -9,6 +9,10 @@ class HomePageView(TemplateView):
 
 
 # About us view: rhizoserver.org/aboutus.html
+class LicenseView(TemplateView):
+    template_name = "pages/license.html"
+
+# About us view: rhizoserver.org/aboutus.html
 class AboutUsView(TemplateView):
     template_name = "pages/about-us.html"
 
@@ -50,19 +54,19 @@ class RhizoTaxView(TemplateView):
 class SubmitView(TemplateView):
     template_name = "pages/submit.html"
 
-    
+
 # Search Result view: rhizoserver.org/search/?q=searchstring
 class SearchResultsView(ListView):
     model = Sequence
     template_name = 'pages/search_results.html'    
 
     def get_queryset(self):
-        query = self.request.GET.get('q')
+        query = self.request.GET.get('q', None)
         search_query = SearchQuery(query)
-        vector = SearchVector('seq_name',     weight = 'A') + \
-                 SearchVector('seq_desc',     weight = 'B') + \
-                 SearchVector('seq_organism', weight = 'C') + \
-                 SearchVector('seq_acc',      weight = 'D')
+        vector = SearchVector('seq_name',                        weight = 'A') + \
+                 SearchVector('seq_desc',                        weight = 'B') + \
+                 SearchVector('sequence__seq_tax__tax_organism', weight = 'C') + \
+                 SearchVector('seq_acc',                         weight = 'D')
         rank = SearchRank(vector, search_query)
         object_list = Sequence.objects\
                               .annotate(rank = rank)\

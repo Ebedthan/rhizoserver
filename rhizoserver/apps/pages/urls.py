@@ -25,4 +25,6 @@ urlpatterns = [
     path('rhizoserver/<str:acc_num>/', views.detail,                name = 'detail'),
     # for search results ex: /search/?q=name+details
     path('search/',                    SearchResultsView.as_view(), name = 'search_results'),
+    # for license view: /license
+    path('license',                    LicenseView.as_view(),       name = 'license'),
 ]

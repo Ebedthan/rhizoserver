@@ -1,0 +1,35 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'pages/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'pages/open-iconic-bootstrap.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'pages/custom.css' %}">
+
+{% include "pages/navbar.html" %}
+<br/>
+<br/>
+<body>
+    <div class="leftpadd">
+        <h3>License and disclaimer</h3>
+        <br/>
+        <b>Last modified:</b> January 23, 2021
+        <br/>
+        <h4>License</h4>
+        <p>
+            All copyrightable parts of our databases are licensed under
+            the <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution (CC BY 4.0) License.</a>
+        </p>
+        <br/>
+        <h4>Disclaimer</h4>
+        <p>
+            We make no warranties regarding the correctness of the data, and disclaim liability for 
+            damages resulting from its use. We cannot provide unrestricted permission regarding the
+            use of the data, as some data may be covered by patents.
+        </p>
+        <p>
+            Any information is provided for research, educational and informational purposes only.
+        </p>
+    </div>
+</body>
+<br/>
+<br/>
+{% include "pages/footer.html" %}

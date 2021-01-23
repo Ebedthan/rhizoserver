@@ -1,0 +1,38 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'pages/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'pages/open-iconic-bootstrap.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'pages/custom.css' %}">
+
+{% include "pages/navbar.html" %}
+<br/>
+<br/>
+<body>
+    <div style="padding-left:20px">
+        <h2> About RhizoServer </h2>
+        <br/>
+        <b>Last modified:</b> January 23, 2021
+        <br/>
+        <br/>
+        <p> 
+            Rhizobiales Server (RhizoServer) is a comprehensive ressource for rRNA sequences and taxonomy of Rhizobiales.
+            RhizoServer is a online database containing curated rRNA sequences, structures and functions of Rhizobiales 
+            which contains bacteria capable of plant symbiosis and pathogenic bacterias.This makes such bacteria 
+            interesting ressource for the study of interations between plant and bacteria, plant health,
+            plant nutrition and sustainable soil fertility management.
+        </p>
+        <br/>
+        <p>
+            RhizoServer has been developped by <a href="https://orcid.org/0000-0003-4005-177X">Anicet Ebou</a> during his thesis.
+        </p>
+        <br/>
+        <br/>
+        <h2> Funding </h2>
+        <p>
+            Do you want to sponsor or gives fund to this project, please contact Anicet Ebou at anicet dot ebou at gmail dot com.
+        </p>
+    </div>
+</body>	
+<br/>
+<br/>
+{% include "pages/footer.html" %}
