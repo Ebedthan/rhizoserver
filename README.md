@@ -6,4 +6,4 @@ structures and functions of Rhizobiales which is composed of bacterias capable o
 ## Author
 Anicet Ebou
 
-!["Rhizoserver"]("./rhizoserver/apps/pages/static/pages/rhizoserver.png" )
+!["Rhizoserver"](./rhizoserver/apps/pages/static/pages/rhizoserver.png)
