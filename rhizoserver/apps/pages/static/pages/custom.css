@@ -1,6 +1,6 @@
 .btn-primary{
-    background-color: #5dbdce;
-    border-color:#5dbdce;
+    background-color: #e3f2fd;
+    border-color:#e3f2fd;
 }
 
 .btn-primary:hover{
@@ -14,7 +14,7 @@ a.nav-link{
 
 /* Footer custom css */
 .page-footer{
-    background-color: #5dbdce;
+    background-color: #e3f2fd;
     color: #FFFFFF;
 }
 

@@ -5,21 +5,14 @@
 <link rel="icon"       type="image/png" href="{% static 'icon.png' %}">
 
 <!--The navigation bar -->
-<nav class="navbar navbar-expand-md navbar-light" style="background-color: #5dbdce;">
-    <a class="navbar-brand" style="color: #FFFFFF;" href="/">
-        <img src="{% static 'pages/rhizoserver.png' %}" width="110" height="auto" class="d-inline-block align-top" alt="RhizoServer">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar5">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="navbar-collapse collapse" id="navbar5">
-        <form action="{% url 'search_results' %}" method="get" class="mx-2 my-auto d-inline w-75">
-            <div class="input-group">
-                <input name="q" type="text" class="form-control">
-                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">
-                  Search
-                </button>
-            </div>
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="{% static 'pages/rhizoserver.png' %}" width="125" height="auto" alt="RhizoServer">
+        </a>
+        <form action="{% url 'search_results' %}" method="get" class="d-flex">
+            <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-sm btn-outline-primary" type="submit"> Search </button>
         </form>
     </div>
 </nav> <!-- navbar end -->
