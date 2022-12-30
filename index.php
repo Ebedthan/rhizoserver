@@ -11,26 +11,49 @@ include 'functions.php';
 <body class="d-flex flex-column min-vh-100">
     <?=nav()?>
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-2"></div>
-            <div class="col-8">
-                <div class="container text-center">
-                    <div class="row">
-                        <div class="gy-5">
-                            <h3>Welcome to RhizoServer!</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <?=template_card('Search genomes', 'genomes.php', '<i style="font-size: 50px;" class="bi bi-search link-success"></i>', false)?>
-                        <?=template_card('Search 16S sequences', '16s.php','assets/images/dna.svg', true)?>
-                    </div>
-                    <div class="row">
-                        <?=template_card('Search HK genes', '#', '<i style="font-size: 50px;" class="bi bi-bar-chart-steps link-success"></i>', false)?>
-                        <?=template_card('Search ASVs', '#', '<i style="font-size: 50px;" class="bi bi-download link-success"></i>', false)?>
+        <div class="row text-center" style="margin-top: 1.56em; margin-bottom: 1.56em;">
+            <h3>Welcome to RhizoServer!</h3>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-5 text-center">
+            <div class="col d-flex justify-content-center">
+                <div class="card border-secondary h-100 w-75">
+                    <div class="card-body text-secondary">
+                        <img src="assets/images/genome.svg" width="150px" height="auto" alt="Genome"/>
+                        <br/>
+                        <br/>
+                        <h5 class="card-title">Genomes</h5>
+                        <a href="genomes.php" class="stretched-link"></a>
                     </div>
                 </div>
             </div>
-            <div class="col-2 gy-5"></div>
+            <div class="col d-flex justify-content-center">
+                <div class="card border-secondary h-100 w-75">
+                    <div class="card-body text-secondary">
+                        <br/>
+                        <br/>
+                        <img src="assets/images/dna.svg" width="200px" height="auto" alt="16S sequence"/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <h5 class="card-title">Genes</h5>
+                        <a href="16s.php" class="stretched-link"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col d-flex justify-content-center">
+                <div class="card border-secondary h-100 w-75">
+                    <div class="card-body text-secondary">
+                        <br/>
+                        <br/>
+                        <i style="font-size: 50px;" class="bi bi-download link-success"></i>
+                        <br/>
+                        <br/>
+                        <h5 class="card-title">Downloads</h5>
+                        <br/>
+                        <a href="#" class="stretched-link"></a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <?=template_footer()?>

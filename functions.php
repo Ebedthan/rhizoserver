@@ -2,39 +2,6 @@
 session_start();
 include 'cog.php';
 
-
-function template_card($title, $href, $icon='',$image=false) {
-    if (!$image) {
-    echo <<<EOT
-<div class="col g-4">
-    <div class="card border-secondary mb-3" style="max-width: 18rem;">
-        <div class="card-body text-secondary">
-            $icon
-            <br/>
-            <br/>
-            <h5 class="card-title">$title</h5>
-            <a href="$href" class="stretched-link"></a>
-        </div>
-    </div>
-</div>
-EOT;
-    } else {
-        echo <<<EOT
-<div class="col g-4">
-    <div class="card border-secondary mb-3" style="max-width: 18rem;">
-        <div class="card-body text-secondary">
-            <img src="$icon" width="236px" height="auto" alt="16S sequence"/>
-            <br/>
-            <br/>
-            <h5 class="card-title">$title</h5>
-            <a href="$href" class="stretched-link"></a>
-        </div>
-    </div>
-</div>
-EOT;
-    }
-}
-
 function template_header($title = 'Welcome!') {
     echo <<<EOT
 <!DOCTYPE html>
@@ -74,8 +41,7 @@ function nav() {
         </a>
         <ul class="nav">
             <li class="nav-item"><a href="genomes.php" class="nav-link px-2 link-dark">Genomes</a></li>
-            <li class="nav-item"><a href="16s.php" class="nav-link px-2 link-dark">16S sequences</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 link-dark">Analyses</a></li>
+            <li class="nav-item"><a href="16s.php" class="nav-link px-2 link-dark">Genes</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 link-dark">Download</a></li>
             <li class="nav-item"><a href="about.php" class="nav-link px-2 link-dark">About</a></li>
         </ul>
@@ -124,7 +90,6 @@ class BaktaJSON {
     public $species;
     public $stats;
     public $annotations;
-    public $fastaURL;
     public $tracks;
 
     // Constructor
@@ -135,6 +100,12 @@ class BaktaJSON {
         // Decode the JSON file
         $json_data = json_decode($json, true);
         $feat = array_count_values(array_column($json_data['features'], 'type'));
+        $sequences = array();
+        $cross = array();
+        foreach ($json_data['sequences'] as $s) {
+            $sequences[$s['orig_id']] = $s['length'];
+            $cross[$s['id']] = $s['orig_id'];
+        };
 
         $data = array(
             "seqs" => $json_data["stats"]['no_sequences'], 
@@ -172,15 +143,6 @@ class BaktaJSON {
             }
         }
 
-        $temp = tmpfile();
-        $fp = fopen("data.fa", 'w');
-
-        foreach ($json_data['sequences'] as $seq) {
-            fwrite($temp, ">" . $seq['id'] . "\n" . chunk_split($seq['sequence'], 80) . "\n");
-            fwrite($fp, ">" . $seq['id'] . "\n" . chunk_split($seq['sequence'], 80) . "\n");
-        }
-        fclose($fp);
-
         $tracks = array();
         $track_type = array(
             "cds" => "CDS/sORF", 
@@ -206,7 +168,7 @@ class BaktaJSON {
         $tori = array();
 
         foreach ($json_data['features'] as $x) {
-            $features = new Feature($x, $json_data['sequences']);
+            $features = new Feature($x, $sequences, $cross);
             $features = array_flatten($features->get_feature());
 
             switch ($track_type[$x['type']]) {
@@ -250,7 +212,6 @@ class BaktaJSON {
         $this->species = $json_data['genome']['genus'] ?? '' . ' ' . $json_data['genome']['species'] ?? '' . ' ' . $json_data['genome']['strain'] ?? '';
         $this->stats = $data;
         $this->annotations = $annot;
-        $this->fastaURL = stream_get_meta_data($temp)['uri'];
         $this->tracks = $tracks;
     }
 
@@ -267,10 +228,6 @@ class BaktaJSON {
         return $this->annotations;
     }
 
-    function get_fastaURL() {
-        return $this->fastaURL;
-    }
-
     function get_tracks() {
         return $this->tracks;
     }
@@ -281,7 +238,7 @@ class Feature {
     public $feature;
 
     // Constructor
-    function __construct($feature, $sequences) {
+    function __construct($feature, $sequences, $cross) {
         $categories = array();
         $color = "";
         if ($feature['type'] == "cds") {
@@ -305,12 +262,11 @@ class Feature {
 
         // Split into two feature when end < start
         if ($feature['stop'] < $feature['start']) {
-            $seq = $sequences[$feature['contig']];
             $this->feature = array(
                 array(
                     "chr" => $feature['contig'], 
                     "start" => $feature['start'] - 1,
-                    "end" => mb_strlen($seq),
+                    "end" => $sequences[$cross[$feature['contig']]],
                     "strand" => $feature["strand"],
                     "type" => $feature["type"],
                     "color" => $color,

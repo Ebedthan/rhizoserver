@@ -11,11 +11,6 @@ include 'functions.php';
 </head>
 <body class="d-flex flex-column min-vh-100">
     <?=nav()?>
-    <?php 
-        $data = new BaktaJSON("tracks/GCF_000172795.2_ASM17279v2_genomic.json"); 
-        $stats = $data->get_stats();
-        $annot = $data->get_annotations();
-    ?>
     <?php
 		$sql = 'SELECT `gID`, `name`, `fastaURL`, `indexURL`, `url`, `indexedURL` FROM `Genomes`, `Tracks` WHERE `gID` = ?';
         $stmt = mysqli_prepare($link, $sql);
@@ -23,6 +18,10 @@ include 'functions.php';
         $stmt->execute();
 		$result = $stmt->get_result();
 		$row = $result->fetch_assoc();
+
+        $data = new BaktaJSON("annotations/" . pathinfo(pathinfo($row["fastaURL"], PATHINFO_FILENAME), PATHINFO_FILENAME) . ".json"); 
+        $stats = $data->get_stats();
+        $annot = $data->get_annotations();
 	?>
     <div class="container">
         <div class="row">
@@ -58,10 +57,10 @@ include 'functions.php';
                                 </div>
                             </div>
                         </div>
-                        <br/>
-                        <br/>
                         <div class="row mb-5">
                             <div class="col-md-10">
+                                <br/>
+                                <br/>
                                 <h5>Summary</h5>
                                 <div class="row">
                                     <div class="col-md-4">
@@ -128,12 +127,6 @@ include 'functions.php';
                     <h4>Genome Viewer</h4>
                     <div class="card card-body">
                         <div id="igvDiv" class="row">
-                            <?php
-                                $fo = fopen("data.json", 'w');
-                                $v = json_encode($data->get_tracks(), JSON_PRETTY_PRINT);
-                                fwrite($fo, $v);
-                                fclose($fo);
-                            ?>
                         <script type="text/javascript">
                             document.addEventListener("DOMContentLoaded", function() {
                             
@@ -141,8 +134,7 @@ include 'functions.php';
                                 var options =  {
                                     reference: {
                                         id: '<?php echo $row["name"]; ?>',
-                                        fastaURL: 'data.fa', // TODO: Change this link to a variable
-                                        // TODO: For this we need to decompress all genome files on server and add a new field with the link to the decompressed files in the database
+                                        fastaURL: '<?php echo "genomes/" . pathinfo($row["fastaURL"], PATHINFO_FILENAME); ?>',
                                         indexed: false,
                                         tracks: <?php echo json_encode($data->get_tracks()); ?>,
                                         wholeGenomeView: false,
