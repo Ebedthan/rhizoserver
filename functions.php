@@ -14,7 +14,66 @@ function template_header($title = 'Welcome!') {
 EOT;
 }
 
+function sanitize($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+function fastani($query, $ref, $kmer, $frag, $frac) {
+    $url = "https://api.gtdb.ecogenomic.org/fastani";
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+    $headers = array("Accept: application/json", "Content-Type: application/json");
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+    $data = <<<DATA
+    {
+        "query": [
+            $query
+        ],
+          "reference": [
+            $ref
+          ],
+          "parameters": {
+            "kmer": $kmer,
+            "frag_len": $frag
+            "min_frag": 50,
+            "min_frac": $frac,
+            "version": "1.33"
+          },
+          "priority": "normal"
+    }
+    DATA;
+
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+
+    $response = curl_exec($curl);
+    curl_close($curl);
+
+    return $response;
+}
+
+function get_fastani_status($jobid) {
+    $url = "https://api.gtdb.ecogenomic.org/fastani/$jobid";
+    $contents_json = json_decode(file_get_contents($url));
+
+    return $contents_json["results"]["data"]["status"];
+}
+
+function get_fastani_result($jobid) {
+    $url = "https://api.gtdb.ecogenomic.org/fastani/$jobid";
+    $contents_json = json_decode(file_get_contents($url));
+
+    return $contents_json;
+}
+
 function template_footer() {
+    $d = date("Y");
     echo <<<EOT
 <footer class="mt-auto py-3 my-4">
     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
@@ -23,7 +82,7 @@ function template_footer() {
         <li class="nav-item"><a href="https://www.buymeacoffee.com/ediman" target="_blank" class="nav-link px-2 text-muted">Buy me a coffee</a></li>
     </ul>
     <p class="text-center">Made with ❤️ and ☕ in Côte d'Ivoire</p>
-    <p class="text-center text-muted">&copy; 2022 RhizoServer</p>
+    <p class="text-center text-muted">&copy; 2022 - $d RhizoServer</p>
 </footer>
 <script type="text/javascript" src="assets/js/bootstrap.bundle.min.js"></script>
 </body>
@@ -41,8 +100,7 @@ function nav() {
         </a>
         <ul class="nav">
             <li class="nav-item"><a href="genomes.php" class="nav-link px-2 link-dark">Genomes</a></li>
-            <li class="nav-item"><a href="16s.php" class="nav-link px-2 link-dark">Genes</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 link-dark">Download</a></li>
+            <li class="nav-item"><a href="download.php" class="nav-link px-2 link-dark">Download</a></li>
             <li class="nav-item"><a href="about.php" class="nav-link px-2 link-dark">About</a></li>
         </ul>
     </div>

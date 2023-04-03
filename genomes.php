@@ -25,31 +25,33 @@ include 'functions.php';
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" class="selectAll" name="selectAll" value="all"></th>
-                                        <th>Accession</th>
+                                        <th>Name</th>
                                         <th>Species</th>
-                                        <th>Genus</th>
-                                        <th>Family</th>
-                                        <th>Genome completness</th>
+                                        <th>Category</th>
+                                        <th>Quality</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php
-                                    $sql = "SELECT Genomes.gID, Genomes.isComplete, rsGenus, rsSpecies, rsFamily FROM Genomes, Taxonomy WHERE Genomes.ID = Taxonomy.genome_id";
+                                    $sql = "SELECT gid, name, genome_category, checkm_completeness, checkm_contamination FROM Genomes";
                                     $result = mysqli_query($link, $sql);
                                     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                         echo "<tr>";
                                         echo "<td></td>";
-                                        echo "<td><a style='color: #000; text-decoration:none;' href='genome.php?gid=".$row["gID"]."'>".$row["gID"]."</a></td>";
-                                        echo "<td><i>".array_values(explode("__", $row["rsSpecies"], 2))[1]."</i></td>";
-                                        echo "<td><i>".array_values(explode("__", $row["rsGenus"], 2))[1]."</i></td>";
-                                        echo "<td>".array_values(explode("__", $row["rsFamily"], 2))[1]."</td>";
-                                        $iscomplete = "";
-                                        if($row["isComplete"] == 0) {
-                                            $iscomplete = 'Fragment'; 
-                                        } else { 
-                                            $iscomplete = 'Complete'; 
+                                        echo "<td><a style='color: #000; text-decoration:none;' href='genome.php?gid=".$row["gid"]."'>".$row["gid"]."</a></td>";
+                                        echo "<td><i>".$row["name"]."</i></td>";
+                                        if ($row["genome_category"] == "derived from metagenome" || $row["genome_category"] == "derived from environmental sample") {
+                                            echo "<td>MAG</td>";
+                                        } else {
+                                            echo "<td>Isolate</td>";
                                         }
-                                        echo "<td>".$iscomplete."</td>";
+                                        if ($row["checkm_completeness"] >= 80 && $row["checkm_contamination"] < 5) {
+                                            echo "<td>High</td>";
+                                        } elseif ($row["checkm_completeness"] >= 50 && $row["checkm_contamination"] < 10 ) {
+                                            echo "<td>Medium</td>";
+                                        } else {
+                                            echo "<td>Low</td>";
+                                        }
                                         echo "</tr>";
                                     }
                                 ?>
@@ -57,11 +59,10 @@ include 'functions.php';
                                 <tfoot>
                                     <tr>
                                         <th><input type="checkbox" class="selectAll" name="selectAll" value="all"></th>
-                                        <th>Accession</th>
+                                        <th>Name</th>
                                         <th>Species</th>
-                                        <th>Genus</th>
-                                        <th>Family</th>
-                                        <th>Genome completness</th>
+                                        <th>Category</th>
+                                        <th>Quality</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -79,7 +80,6 @@ include 'functions.php';
             var table = $('#genomeTable').DataTable({
                 stateSave: true,
                 select: true,
-                dom: 'Bfrtip',
                 columnDefs: [{
                     orderable: false,
                     className: 'select-checkbox',
@@ -89,21 +89,6 @@ include 'functions.php';
                     style: 'os',
                     selector: 'td:first-child'
                 },
-                buttons: [
-                    'copy', 'csv', 'pdf',
-                    {
-                        text: 'Select everything',
-                        action: function () {
-                            table.rows().select();
-                        }
-                    },
-                    {
-                        text: 'Deselect everything',
-                        action: function () {
-                            table.rows().deselect();
-                        }
-                    }
-                ]
             });
         });
 
@@ -119,4 +104,3 @@ include 'functions.php';
         });
     </script>
     <?=template_footer()?>
-
