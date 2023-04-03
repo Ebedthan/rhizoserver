@@ -34,7 +34,7 @@ include 'functions.php';
                             $result = $stmt->get_result();
                             $row = $result->fetch_assoc();
                             if (is_null($row)) {
-                                echo "Job ID not found, be sure to have launched FastANI from analysis.php"; 
+                                echo "Job ID not found, be sure to have launched FastANI from <a href='https://rhizoserver.org/analysis.php'>our analysis page</a>"; 
                             } else {
                                 echo "FastANI v1.33";
                                 echo "Kmer length: " . $row['kmer'];
