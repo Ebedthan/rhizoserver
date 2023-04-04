@@ -64,7 +64,7 @@ include 'functions.php';
                         <br/>
                         <h5 class="card-title">Tools</h5>
                         <br/>
-                        <a href="#" class="stretched-link"></a>
+                        <a href="tools.php" class="stretched-link"></a>
                     </div>
                 </div>
             </div>

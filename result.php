@@ -34,11 +34,13 @@ include 'functions.php';
                             if (is_null($row)) {
                                 echo "Job ID not found, be sure to have launched FastANI from <a href='https://rhizoserver.org/analysis.php'>our analysis page</a>"; 
                             } else {
+                                echo "======================== Parameters ========================";
                                 echo "FastANI v1.33" . "<br/>";
                                 echo "Kmer length: " . $row['kmer'] . "<br/>";
                                 echo "Fragment length: " . $row['fragLen'] . "<br/>";
                                 echo "Minimum fraction of genome: " . $row['minFrac'] . "<br/>";
                                 echo "Start Date: " . $row['startDate'] . "<br/>";
+                                echo "======================== Results ========================";
                                 $status = get_fastani_status($_GET["job_id"]);
                                 if ($status == "failed") {
                                     $res_json = get_fastani_result($_GET["job_id"]);
