@@ -42,20 +42,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $email_error = "Invalid email format";
             }
         }
-        if (!empty($query_error) && !empty($ref_error) && !empty($kmer_error) && !empty($minfrac_error) && !empty($email_error)) {
+        if (empty($query_error) && empty($ref_error) && empty($kmer_error) && empty($minfrac_error) && empty($email_error)) {
 
             $query = sanitize($_POST["inputQuery"]);
-            $ref = sanitize($_POST["inputReference"]);
+            $ref = sanitize($_POST["inputRef"]);
 
             // sending api request
-            $response = fastani($query, $ref, $kmer, $frag, $frac);
+            $response = fastani($query, $ref, $kmer, $frag_len, $min_frac);
             $response_json = json_decode($reponse);
             $startDate = getdate();
             $endDate = '';
 
             // Write data to DB
             $stmt = $link->prepare("INSERT INTO FastANI (jobid, query, reference, kmer, fragLen, minFrac, startDate, endDate, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssiidsss", $response_json["job_id"], $query, $reference, $kmer, $frag, $frac, $startDate, $endDate, $email);
+            $stmt->bind_param("sssiidsss", $response_json["job_id"], $query, $reference, $kmer, $frag_len, $min_frac, $startDate, $endDate, $email);
             $stmt->execute();
 
             header("Location:result.php?job_id=".$response_json["job_id"]);

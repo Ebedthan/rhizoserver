@@ -21,11 +21,9 @@ include 'functions.php';
                 <div class="row">
                     <label for="jobID" class="form-label">Job ID</label>
                     <input id="jobID" class="form-control" type="text" value="<?php echo $_GET["job_id"]; ?>" aria-label="job id" readonly>
-                    <br/>
-                    <br/>
-                    <div class="card">
+                    <div class="card gy-4">
                         <h5 class="card-header">Results</h5>
-                        <div class="card-body text-bg-dark">
+                        <div class="card-body text-bg-dark g-2">
                         <?php
                             $sql = 'SELECT jobid, query, reference, kmer, fragLen, minFrac, startDate, endDate FROM FastANI WHERE jobid = ?';
                             $stmt = mysqli_prepare($link, $sql);
@@ -49,6 +47,7 @@ include 'functions.php';
                                     echo $run;
                                 }
                                 while ($status != "finished" || $status != "failed");
+
                                 $res = get_fastani_result($_GET["job_id"]);
                                 echo "Query: " . $r["data"]["query"];
                                 echo "Reference: " . $r["data"]["reference"];
@@ -65,6 +64,7 @@ include 'functions.php';
                             }
                         ?>
                         </div>
+                        <br><br>
                     </div>
                 </div>
             </div>

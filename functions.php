@@ -31,26 +31,21 @@ function fastani($query, $ref, $kmer, $frag, $frac) {
     $headers = array("Accept: application/json", "Content-Type: application/json");
     curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
-    $data = <<<DATA
-    {
-        "query": [
-            $query
-        ],
-          "reference": [
-            $ref
-          ],
-          "parameters": {
-            "kmer": $kmer,
-            "frag_len": $frag
-            "min_frag": 50,
-            "min_frac": $frac,
-            "version": "1.33"
-          },
-          "priority": "normal"
-    }
-    DATA;
+    $data = array(
+        "query" => array("$query"),
+        "reference" => array("$ref"),
+        "parameters" => array(
+            "kmer" => $kmer,
+            "frag_len" => $frag,
+            "min_frag" => 50,
+            "min_frac" => $frac,
+            "version" => "1.33"
+        ),
+        "priority" => "secret",
+    );
+    $payload = json_encode($data);
 
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
 
     $response = curl_exec($curl);
     curl_close($curl);
