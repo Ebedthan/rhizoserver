@@ -55,16 +55,25 @@ function fastani($query, $ref, $kmer, $frag, $frac) {
 
 function get_fastani_status($jobid) {
     $url = "https://api.gtdb.ecogenomic.org/fastani/$jobid";
-    $contents_json = json_decode(file_get_contents($url));
-
-    return $contents_json["results"]["data"]["status"];
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    curl_close($curl);
+    $response_json = json_decode($response); 
+    return $response_json->results[0]->data->status;
 }
 
 function get_fastani_result($jobid) {
     $url = "https://api.gtdb.ecogenomic.org/fastani/$jobid";
-    $contents_json = json_decode(file_get_contents($url));
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    curl_close($curl);
+    $response_json = json_decode($response);
 
-    return $contents_json;
+    return $response_json;
 }
 
 function template_footer() {

@@ -34,28 +34,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             $min_frac = sanitize($_POST["inputMinFrac"]);
         }
-        if (empty($_POST["inputEmail"])) {
-            $email = '';
-        } else {
-            $email = sanitize($_POST["inputEmail"]);
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $email_error = "Invalid email format";
-            }
-        }
         if (empty($query_error) && empty($ref_error) && empty($kmer_error) && empty($minfrac_error) && empty($email_error)) {
-
             $query = sanitize($_POST["inputQuery"]);
             $ref = sanitize($_POST["inputRef"]);
 
             // sending api request
             $response = fastani($query, $ref, $kmer, $frag_len, $min_frac);
-            $response_json = json_decode($reponse);
-            $startDate = getdate();
-            $endDate = '';
+            $response_json = json_decode($response, true);
+            $startDate = date("F j, Y, g:i a");
 
             // Write data to DB
-            $stmt = $link->prepare("INSERT INTO FastANI (jobid, query, reference, kmer, fragLen, minFrac, startDate, endDate, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssiidsss", $response_json["job_id"], $query, $reference, $kmer, $frag_len, $min_frac, $startDate, $endDate, $email);
+            $stmt = $link->prepare("INSERT INTO FastANI (jobid, query, reference, kmer, fragLen, minFrac, startDate) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssiidsss", $response_json["job_id"], $query, $ref, $kmer, $frag_len, $min_frac, $startDate);
             $stmt->execute();
 
             header("Location:result.php?job_id=".$response_json["job_id"]);
@@ -90,14 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <label for="inputReference" class="form-label">Reference</label>
                                 <input id="inputReference" name="inputRef" class="form-control" placeholder="GCA_123456789.1" type="text" required>
                                 <div class="invalid-feedback"><?php echo $ref_error; ?></div>
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <label for="inputEmail" class="form-label">Email (to be contacted when program is finished, optional)</label>
-                                <input id="inputEmail" name="inputEmail" class="form-control" type="email">
-                                <div class="invalid-feedback"><?php echo $email_error; ?></div>
                             </div>
                         </div>
                         <br/><br/>

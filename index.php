@@ -68,9 +68,6 @@ include 'functions.php';
                     </div>
                 </div>
             </div>
-            <?php 
-            fastani("GCA_002307905.1", "GCA_002307905.1", 16, 3000, 0.2);
-            ?>
         </div>
     </div>
     <?=template_footer()?>

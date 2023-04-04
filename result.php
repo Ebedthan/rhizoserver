@@ -25,7 +25,7 @@ include 'functions.php';
                         <h5 class="card-header">Results</h5>
                         <div class="card-body text-bg-dark g-2">
                         <?php
-                            $sql = 'SELECT jobid, query, reference, kmer, fragLen, minFrac, startDate, endDate FROM FastANI WHERE jobid = ?';
+                            $sql = 'SELECT jobid, query, reference, kmer, fragLen, minFrac, startDate FROM FastANI WHERE jobid = ?';
                             $stmt = mysqli_prepare($link, $sql);
                             $stmt->bind_param("s", $_GET["job_id"]);
                             $stmt->execute();
@@ -34,32 +34,33 @@ include 'functions.php';
                             if (is_null($row)) {
                                 echo "Job ID not found, be sure to have launched FastANI from <a href='https://rhizoserver.org/analysis.php'>our analysis page</a>"; 
                             } else {
-                                echo "FastANI v1.33";
-                                echo "Kmer length: " . $row['kmer'];
-                                echo "Fragment length: " . $row['fragLen'];
-                                echo "Minimum fraction of genome: " . $row['minFrac'];
-                                echo "Start Date: " . date("F j, Y, g:i a", $row['startDate']);
-                                $run = "";
-
-                                do {
-                                    $status = get_fastani_status($_GET["job_id"]);
-                                    $run .= '.';
-                                    echo $run;
-                                }
-                                while ($status != "finished" || $status != "failed");
-
-                                $res = get_fastani_result($_GET["job_id"]);
-                                echo "Query: " . $r["data"]["query"];
-                                echo "Reference: " . $r["data"]["reference"];
-                                echo "Command: " . $r["data"]["cmd"];
-                                echo $r["data"]["stderr"];
-                                if ($status == "finished") {
-                                    foreach ($res["results"] as $r) {
-                                        echo "ANI: " . $r["data"]["ani"];
-                                        echo "AF: " . $r["data"]["af"];
-                                        echo "Mapped: " . $r["data"]["mapped"];
-                                        echo "Total: " .$r["data"]["total"];
+                                echo "FastANI v1.33" . "<br/>";
+                                echo "Kmer length: " . $row['kmer'] . "<br/>";
+                                echo "Fragment length: " . $row['fragLen'] . "<br/>";
+                                echo "Minimum fraction of genome: " . $row['minFrac'] . "<br/>";
+                                echo "Start Date: " . $row['startDate'] . "<br/>";
+                                $status = get_fastani_status($_GET["job_id"]);
+                                if ($status == "failed") {
+                                    $res_json = get_fastani_result($_GET["job_id"]);
+                                    foreach ($res_json->results as $res) {
+                                        echo "Query: " . $res->query . "<br/>";
+                                        echo "Reference: " . $res->reference . "<br/>";
+                                        echo "Command: " . $res->data->cmd . "<br/>";
+                                        echo $res->data->stderr . "<br/>";
                                     }
+                                } elseif ($status == "finished") {
+                                    $res_json = get_fastani_result($_GET["job_id"]);
+                                    foreach ($res_json->results as $res) {
+                                        echo "Query: " . $res->query . "<br/>";
+                                        echo "Reference: " . $res->reference . "<br/>";
+                                        echo "Command: " . $res->data->cmd . "<br/>";
+                                        echo "ANI: " . $res->data->ani . "<br/>";
+                                        echo "AF: " . $res->data->af . "<br/>";
+                                        echo "Mapped: " . $res->data->mapped . "<br/>";
+                                        echo "Total: " . $res->data->total . "<br/>";
+                                    }
+                                } else {
+                                    echo "Running...";
                                 }
                             }
                         ?>
