@@ -71,15 +71,15 @@ include 'functions.php';
                                 <div class="label col-md-2">GTDB Taxonomy:</div>
                                 <div class="value col-md-10">
                                     <?php 
-                                    echo implode(";",
+                                    echo implode("&bull;",
                                         [
-                                            "<a href='https://gtdb.ecogenomic.org/tree?r=".$metadata['metadata_taxonomy']['gtdb_domain']."'>".$metadata['metadata_taxonomy']['gtdb_domain']."</a>",
-                                            "<a href='https://gtdb.ecogenomic.org/tree?r=".$metadata['metadata_taxonomy']['gtdb_phylum']."'>".$metadata['metadata_taxonomy']['gtdb_phylum']."</a>",
-                                            "<a href='https://gtdb.ecogenomic.org/tree?r=".$metadata['metadata_taxonomy']['gtdb_class']."'>".$metadata['metadata_taxonomy']['gtdb_class']."</a>",
-                                            "<a href='https://gtdb.ecogenomic.org/tree?r=".$metadata['metadata_taxonomy']['gtdb_order']."'>".$metadata['metadata_taxonomy']['gtdb_order']."</a>",
-                                            "<a href='https://gtdb.ecogenomic.org/tree?r=".$metadata['metadata_taxonomy']['gtdb_family']."'>".$metadata['metadata_taxonomy']['gtdb_family']."</a>",
-                                            "<a href='https://gtdb.ecogenomic.org/tree?r=".$metadata['metadata_taxonomy']['gtdb_genus']."'>".$metadata['metadata_taxonomy']['gtdb_genus']."</a>",
-                                            "<a href='https://gtdb.ecogenomic.org/tree?r=".$metadata['metadata_taxonomy']['gtdb_species']."'>".$metadata['metadata_taxonomy']['gtdb_species']."</a>",
+                                            "<a href='https://gtdb.ecogenomic.org/tree?r=".$metadata['metadata_taxonomy']['gtdb_domain']."'>".explode("__", $metadata['metadata_taxonomy']['gtdb_domain'])[1]."</a> ",
+                                            " <a href='https://gtdb.ecogenomic.org/tree?r=".$metadata['metadata_taxonomy']['gtdb_phylum']."'>".explode("__", $metadata['metadata_taxonomy']['gtdb_phylum'])[1]."</a> ",
+                                            " <a href='https://gtdb.ecogenomic.org/tree?r=".$metadata['metadata_taxonomy']['gtdb_class']."'>".explode("__", $metadata['metadata_taxonomy']['gtdb_class'])[1]."</a> ",
+                                            " <a href='https://gtdb.ecogenomic.org/tree?r=".$metadata['metadata_taxonomy']['gtdb_order']."'>".explode("__", $metadata['metadata_taxonomy']['gtdb_order'])[1]."</a> ",
+                                            " <a href='https://gtdb.ecogenomic.org/tree?r=".$metadata['metadata_taxonomy']['gtdb_family']."'>".explode("__", $metadata['metadata_taxonomy']['gtdb_family'])[1]."</a> ",
+                                            " <a href='https://gtdb.ecogenomic.org/tree?r=".$metadata['metadata_taxonomy']['gtdb_genus']."'>".explode("__", $metadata['metadata_taxonomy']['gtdb_genus'])[1]."</a> ",
+                                            " <a href='https://gtdb.ecogenomic.org/tree?r=".$metadata['metadata_taxonomy']['gtdb_species']."'><i>".explode("__", $metadata['metadata_taxonomy']['gtdb_species'])[1]."</i></a>",
                                         ]
                                     ); 
                                     ?>
@@ -87,7 +87,16 @@ include 'functions.php';
                             </div>
                             <div class="row">
                                 <div class="label col-md-2">NCBI Taxonomy (Unfiltered):</div>
-                                <div class="value col-md-10"><?php echo $metadata['link_ncbi_taxonomy_unfiltered']; ?></div>
+                                <div class="value col-md-10">
+                                    <?php 
+                                        $c = explode(";", $metadata['link_ncbi_taxonomy_unfiltered']); 
+                                        $ar = array();
+                                        foreach ($c as $x) {
+                                            array_push($ar, preg_replace("/(\w)__(.*)/", "$2", $x));
+                                        }
+                                        echo implode(" &bull; ", $ar);
+                                    ?>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="label col-md-4">GTDB representative:</div>
