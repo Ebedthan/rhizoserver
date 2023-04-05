@@ -104,6 +104,7 @@ function nav() {
         </a>
         <ul class="nav">
             <li class="nav-item"><a href="genomes.php" class="nav-link px-2 link-dark">Genomes</a></li>
+            <li class="nav-item"><a href="analysis.php" class="nav-link px-2 link-dark">Analysis</a></li>
             <li class="nav-item"><a href="download.php" class="nav-link px-2 link-dark">Download</a></li>
             <li class="nav-item"><a href="about.php" class="nav-link px-2 link-dark">About</a></li>
         </ul>
