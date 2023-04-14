@@ -2,6 +2,8 @@
 session_start();
 include 'cog.php';
 
+$xmlCache = null;
+
 function template_header($title = 'Welcome!') {
     echo <<<EOT
 <!DOCTYPE html>
@@ -134,6 +136,15 @@ function nav() {
     </div>
 </nav>
 EOT;
+}
+
+function getXmlDoc() {
+    global $xmlCache;
+    if (!$xmlCache) {
+        $xmlCache = new DOMDocument();
+        $xmlCache->load("search.xml");
+    }
+    return $xmlCache;
 }
 
 function lookup_cog($feature) {
