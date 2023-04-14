@@ -11,6 +11,24 @@ function template_header($title = 'Welcome!') {
         <title>$title - RhizoServer</title>
         <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+        <script>
+            function showResult(str) {
+                if (str.length == 0) {
+                    document.getElementById("livesearch").innerHTML="";
+                    document.getElementById("livesearch").style.border="0px";
+                    return;
+                }
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("livesearch").innerHTML=this.responseText;
+                        document.getElementById("livesearch").style="rounded";
+                    }
+                }
+                xmlhttp.open("GET", "search.php?q="+str,true);
+                xmlhttp.send();
+            }
+        </script>
 EOT;
 }
 
@@ -102,6 +120,11 @@ function nav() {
             <img src="assets/images/rhizo_brand.png" width="50" height="auto" alt="RhizoServer logo">
             RhizoServer
         </a>
+        <div class="col-6" style="margin-left: 30px;">
+            <form class="form-inline">
+                <input class="form-control border-success" type="search" placeholder="Search..." onkeyup="showResult(this.value)">
+            </form>
+        </div>
         <ul class="nav">
             <li class="nav-item"><a href="genomes.php" class="nav-link px-2 link-dark">Genomes</a></li>
             <li class="nav-item"><a href="analysis.php" class="nav-link px-2 link-dark">Analysis</a></li>

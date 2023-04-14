@@ -21,7 +21,7 @@ include 'functions.php';
                     </div>
                     <div class="row">
                         <div class="gy-5">
-                            <table id="genomeTable" class="table" style="width:100%">
+                            <table id="genomeTable" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" class="selectAll" name="selectAll" value="all"></th>
@@ -78,6 +78,7 @@ include 'functions.php';
     <script type="text/javascript">
         $(document).ready(function(){
             var table = $('#genomeTable').DataTable({
+                "pageLength": 25,
                 stateSave: true,
                 select: true,
                 columnDefs: [{

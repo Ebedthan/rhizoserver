@@ -11,14 +11,17 @@ include 'functions.php';
 <body class="d-flex flex-column min-vh-100">
     <?=nav()?>
     <div class="container">
-        <div class="row text-center" style="margin-top: 1.56em; margin-bottom: 1.56em;">
+        <div class="row">
+            <div style="overflow-y: auto; max-height: 200px;" class="col-md-6 offset-md-1 z-3 shadow position-absolute rounded-3 bg-white text-dark" id="livesearch"></div>
+        </div>
+        <div class="row text-center z-0" style="margin-top: 1.56em; margin-bottom: 1.56em;">
             <h3>Welcome to RhizoServer!</h3>
         </div>
         <div class="row row-cols-md-2 g-5 text-center">
             <div class="col align-self-center d-flex justify-content-center">
                 <div class="card border-secondary h-100 w-75">
                     <div class="card-body text-secondary">
-                        <img src="assets/images/genome.svg" width="150px" height="auto" alt="Genome"/>
+                        <img src="assets/images/dna.png" width="150px" height="auto" alt="Genome"/>
                         <br/>
                         <br/>
                         <h5 class="card-title">Genomes</h5>
