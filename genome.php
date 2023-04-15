@@ -49,7 +49,7 @@ include 'functions.php';
         $metadata = json_decode($metfile, true);
 	?>
     <div class="container">
-        <div class="row">
+        <div class="row z-0">
             <!-- Left column-->
             <div class="col-8">
                 <div class="mt-5">
@@ -224,6 +224,7 @@ include 'functions.php';
                         </div>
                     </div>
                     <br/>
+                    <!--
                     <div class="row">
                         <div class="col">
                             <div class="card h-100">
@@ -233,7 +234,7 @@ include 'functions.php';
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             <!-- Right column -->

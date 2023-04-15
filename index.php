@@ -11,9 +11,6 @@ include 'functions.php';
 <body class="d-flex flex-column min-vh-100">
     <?=nav()?>
     <div class="container">
-        <div class="row">
-            <div style="overflow-y: auto; max-height: 200px;" class="col-md-6 offset-md-1 z-3 shadow position-absolute rounded-3 bg-white text-dark" id="livesearch"></div>
-        </div>
         <div class="row text-center z-0" style="margin-top: 1.56em; margin-bottom: 1.56em;">
             <h3>Welcome to RhizoServer!</h3>
         </div>

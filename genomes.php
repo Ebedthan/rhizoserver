@@ -11,7 +11,7 @@ include 'functions.php';
 <body class="d-flex flex-column min-vh-100">
     <?=nav()?>
     <div class="container">
-        <div class="row align-items-center">
+        <div class="row align-items-center z-0">
             <div class="col">
                 <div class="container">
                     <div class="row">

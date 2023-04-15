@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body class="d-flex flex-column min-vh-100">
     <?=nav()?>
     <div class="container">
-        <div class="row">
+        <div class="row z-0">
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="row text-center" style="margin-top: 1.56em; margin-bottom: 1.56em;">

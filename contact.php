@@ -12,7 +12,7 @@ include 'functions.php';
 <body class="d-flex flex-column min-vh-100">
     <?=nav()?>
     <div class="container">
-        <div class="row align-items-center">
+        <div class="row z-0 align-items-center">
             <div class="col">
                 <div class="container px-4 py-5" id="icon-grid">
                     <h2 class="pb-2 border-bottom">Let us connect!</h2>

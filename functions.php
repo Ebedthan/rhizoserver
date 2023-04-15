@@ -17,14 +17,12 @@ function template_header($title = 'Welcome!') {
             function showResult(str) {
                 if (str.length == 0) {
                     document.getElementById("livesearch").innerHTML="";
-                    document.getElementById("livesearch").style.border="0px";
                     return;
                 }
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         document.getElementById("livesearch").innerHTML=this.responseText;
-                        document.getElementById("livesearch").style="rounded";
                     }
                 }
                 xmlhttp.open("GET", "search.php?q="+str,true);
@@ -122,7 +120,7 @@ function nav() {
             <img src="assets/images/rhizo_brand.png" width="50" height="auto" alt="RhizoServer logo">
             RhizoServer
         </a>
-        <div class="col-6" style="margin-left: 30px;">
+        <div class="col-md-4" style="margin-left: 100px;">
             <form class="form-inline">
                 <input class="form-control border-success" type="search" placeholder="Search..." onkeyup="showResult(this.value)">
             </form>
@@ -135,6 +133,9 @@ function nav() {
         </ul>
     </div>
 </nav>
+<div class="row">
+    <div class="col-md-4 offset-md-4 z-3 shadow position-absolute rounded-3 bg-white text-dark" id="livesearch"></div>
+</div>
 EOT;
 }
 

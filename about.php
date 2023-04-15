@@ -10,7 +10,7 @@ include 'functions.php';
 <body class="d-flex flex-column min-vh-100">
     <?=nav()?>
     <div class="container">
-        <div class="row align-items-center">
+        <div class="row z-0 align-items-center">
             <div class="col-2"></div>
             <div class="col-8 g-5">
                 <h3>About RhizoServer</h3>
