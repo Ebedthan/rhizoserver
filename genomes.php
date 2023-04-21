@@ -26,6 +26,7 @@ include 'functions.php';
                                     <tr>
                                         <th><input type="checkbox" class="selectAll" name="selectAll" value="all"></th>
                                         <th>Name</th>
+                                        <th>Family</th>
                                         <th>Species</th>
                                         <th>Category</th>
                                         <th>Quality</th>
@@ -33,12 +34,13 @@ include 'functions.php';
                                 </thead>
                                 <tbody>
                                 <?php
-                                    $sql = "SELECT gid, name, genome_category, checkm_completeness, checkm_contamination FROM Genomes";
+                                    $sql = "SELECT gid, name, genome_category, checkm_completeness, checkm_contamination, Taxonomy.family FROM Genomes, Taxonomy WHERE Genomes.id = Taxonomy.genome_id";
                                     $result = mysqli_query($link, $sql);
                                     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                         echo "<tr>";
                                         echo "<td></td>";
                                         echo "<td><a style='color: #000; text-decoration:none;' href='genome.php?gid=".$row["gid"]."'>".$row["gid"]."</a></td>";
+                                        echo "<td>" . explode("__", $row["family"])[1] . "</td>";
                                         echo "<td><i>".$row["name"]."</i></td>";
                                         if ($row["genome_category"] == "derived from metagenome" || $row["genome_category"] == "derived from environmental sample") {
                                             echo "<td>MAG</td>";
@@ -60,6 +62,7 @@ include 'functions.php';
                                     <tr>
                                         <th><input type="checkbox" class="selectAll" name="selectAll" value="all"></th>
                                         <th>Name</th>
+                                        <th>Family</th>
                                         <th>Species</th>
                                         <th>Category</th>
                                         <th>Quality</th>

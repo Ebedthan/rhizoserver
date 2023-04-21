@@ -2,7 +2,6 @@
 session_start();
 
 require_once 'config.php';
-
 include 'functions.php';
 ?>
 <?=template_header("Welcome")?>

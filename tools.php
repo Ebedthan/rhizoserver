@@ -11,7 +11,7 @@ include 'functions.php';
 <body class="d-flex flex-column min-vh-100">
     <?=nav()?>
     <div class="container text-center">
-        <div class="row text-center" style="margin-top: 1.56em; margin-bottom: 1.56em;">
+        <div class="row text-center z-0" style="margin-top: 1.56em; margin-bottom: 1.56em;">
             <h3>Useful tools for Rhizobia genome analysis</h3>
             <br><br><br>
         </div>
