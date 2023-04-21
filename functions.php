@@ -39,7 +39,7 @@ function sanitize($data) {
     return $data;
 }
 
-function fastani($query, $ref, $kmer, $frag, $frac) {
+function fastani($query, $ref, $kmer, $frag, $frac, $email) {
     $url = "https://api.gtdb.ecogenomic.org/fastani";
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $url);
@@ -60,6 +60,7 @@ function fastani($query, $ref, $kmer, $frag, $frac) {
             "version" => "1.33"
         ),
         "priority" => "secret",
+        "email" => $email,
     );
     $payload = json_encode($data);
 

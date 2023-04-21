@@ -34,12 +34,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             $min_frac = sanitize($_POST["inputMinFrac"]);
         }
+        if (empty($_POST["email"])) {
+            $email = "";
+        } else {
+            $email = sanitize($_POST["email"]);
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $email_error = "Invalid email format";
+            }
+        }
         if (empty($query_error) && empty($ref_error) && empty($kmer_error) && empty($minfrac_error) && empty($email_error)) {
             $query = sanitize($_POST["inputQuery"]);
             $ref = sanitize($_POST["inputRef"]);
 
             // sending api request
-            $response = fastani($query, $ref, $kmer, $frag_len, $min_frac);
+            $response = fastani($query, $ref, $kmer, $frag_len, $min_frac, $email);
             $response_json = json_decode($response, true);
             $startDate = date("F j, Y, g:i a");
 
@@ -82,7 +91,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="invalid-feedback"><?php echo $ref_error; ?></div>
                             </div>
                         </div>
-                        <br/><br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control" id="email">
+                                <div class="invalid-feedback"><?php echo $email_error; ?></div>
+                            </div>
+                        </div>
+                        <br/>
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="kmerText" class="form-label">Kmer length</label>
