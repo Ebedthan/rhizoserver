@@ -21,7 +21,7 @@ include 'functions.php';
                             <i class="bi bi-house-door text-muted flex-shrink-0 me-3" style="font-size: 1.75em;"></i>
                             <div>
                             <h4 class="fw-bold mb-0">Our Home</h4>
-                            <p>The Bioinformatic laboratory of the Institut National Polytechnique Félix Houphouët-Boigny</p>
+                            <p>The Bioinformatic and Biostatistics laboratory of the Institut National Polytechnique Félix Houphouët-Boigny</p>
                             </div>
                         </div>
                         <div class="col d-flex align-items-start">
